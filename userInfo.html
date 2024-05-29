@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Information Form (jQuery)</title>
+  <style>
+  /* Overall between Javascript and jQuery when writing this code it looks very similar
+   however I think I prefer using jQuery. It was faster and easier to use. Even using my 
+   webpage seems to be working slightly faster. 
+   The primary difference lies in how the form is validated and how user information is displayed */
+
+    /* Styling for the page body */
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f0f0f0;
+      padding: 20px;
+    }
+
+    /* Styling for the page title */
+    h1 {
+      background-color: #3498db;
+      color: white;
+      padding: 20px;
+      border-radius: 5px;
+    }
+
+    /* Styling for the form container */
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px #aaa;
+    }
+
+    /* Styling for labels in the form */
+    label {
+      display: block;
+      text-align: left;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    /* Styling for input fields */
+    input {
+      width: 90%; /* Adjust the width to 90% of the container */
+      padding: 8px;
+      margin: 5px 0;
+      border: 2px solid #ccc;
+      border-radius: 3px;
+      box-sizing: border-box; /* Include padding and border in width calculation */
+    }
+
+    /* Styling for error messages */
+    span {
+      color: red;
+    }
+
+    /* Styling for the submit button */
+    input[type="submit"] {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    /* Hover effect for the submit button */
+    input[type="submit"]:hover {
+      background-color: #2780b3;
+    }
+
+    /* Styling for the user information display box */
+    #user-info {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px #aaa;
+      margin-top: 20px;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Include jQuery library -->
+  <script>
+    // jQuery code for form validation and user information display
+    $(document).ready(function() {
+      $("form").submit(function(e) {
+        // Prevent the form from submitting
+        e.preventDefault(); 
+
+        // Reset error messages
+        $(".error-message").text("");
+
+        // Get user inputs
+        var firstName = $("#firstname").val();
+        var lastName = $("#lastname").val();
+        var username = $("#username").val();
+        var password = $("#password").val();
+
+        var valid = true;
+
+        // Validate First Name
+        if (!/^[a-zA-Z]{1,15}$/.test(firstName)) {
+          valid = false;
+          $("#error-firstname").text("First name must be 1-15 characters of text.");
+        }
+
+        // Validate Last Name
+        if (!/^[a-zA-Z]{1,15}$/.test(lastName)) {
+          valid = false;
+          $("#error-lastname").text("Last name must be 1-15 characters of text.");
+        }
+
+        // Validate Username
+        if (username.length < 4 || username.length > 12) {
+          valid = false;
+          $("#error-username").text("Username must be 4-12 characters long.");
+        }
+
+        // Validate Password
+        if (password.length < 8 || !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(password)) {
+          valid = false;
+          $("#error-password").text("Password must be at least 8 characters and include at least one uppercase, one lowercase, and one digit.");
+        }
+
+        if (valid) {
+          // Display user information
+          var userInfo = "First Name: " + firstName + "<br>";
+          userInfo += "Last Name: " + lastName + "<br>";
+          userInfo += "Username: " + username + "<br>";
+          userInfo += "Password: " + password;
+
+          $("#user-info").html("<h2>User Information</h2>" + userInfo);
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+  <h1>User Information Form (jQuery)</h1>
+  <form method="post">
+    <div>
+      <label for="firstname">First Name:</label>
+      <input type="text" id="firstname" name="firstname">
+      <span id="error-firstname" class="error-message"></span>
+    </div>
+  
+    <div>
+      <label for="lastname">Last Name:</label>
+      <input type="text" id="lastname" name="lastname">
+      <span id="error-lastname" class="error-message"></span>
+    </div>
+  
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username">
+      <span id="error-username" class="error-message"></span>
+    </div>
+  
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password">
+      <span id="error-password" class="error-message"></span>
+    </div>
+  
+    <div>
+      <input type="submit" value="Submit">
+    </div>
+  </form>
+  
+  <div id="user-info">
+    <h2>User Information</h2>
+  </div>
+</body>
+</html>
